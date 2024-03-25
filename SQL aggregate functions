@@ -1,0 +1,39 @@
+#Caculations COUNT,SUM,AVG,MIN,MAX
+#GROUP BY
+#Count
+SELECT COUNT(*)
+FROM oliveoil.sales
+WHERE prod_category='Gift Basket';
+SELECT COUNT(DISTINCT cust_id)
+FROM oliveoil.sales;
+#AS using as alias
+SELECT COUNT(DISTINCT cust_id)AS customer_count
+FROM oliveoil.sales;
+#SUM/AVG
+SELECT SUM(order_total)AS sum_of_orders,
+AVG(order_total)AS avg_order
+FROM oliveoil.sales
+WHERE cust_type='Business';
+#MIN,MAX
+SELECT MIN(order_total)AS min_of_orders,
+MAX(order_total)AS max_order
+FROM oliveoil.sales
+WHERE cust_type='Business';
+#grouping the data by GROUP BY
+SELECT cust_state,
+SUM(order_total)AS sum_of_orders,
+COUNT(*)AS order_count,
+AVG(order_total)AS avg_order
+FROM oliveoil.sales
+WHERE cust_type='Business'
+GROUP BY cust_state
+ORDER BY sum_of_orders DESC;
+#HAVING 
+SELECT cust_state,
+SUM(order_total)AS sum_of_orders,
+COUNT(*)AS order_count,
+AVG(order_total)AS avg_order
+FROM oliveoil.sales
+GROUP BY cust_state
+HAVING avg_order<200
+ORDER BY sum_of_orders DESC;
